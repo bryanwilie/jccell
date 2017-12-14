@@ -6,6 +6,7 @@ import ItemList from './components/ItemList';
 import ItemCreate from './components/ItemCreate';
 import ItemEdit from './components/ItemEdit';
 import ProviderList from './components/ProviderList';
+import PackageList from './components/PackageList';
 import { backPage } from './actions';
 
 class RouterComponent extends Component {
@@ -28,6 +29,11 @@ class RouterComponent extends Component {
         <Scene key="main">
           <Scene
             initial
+            onLeft={() => {
+              Actions.pop()
+              Actions.login()
+            }}
+            leftTitle="Sign In"
             key="providerList"
             component={ProviderList}
             title="Provider List"
@@ -35,14 +41,8 @@ class RouterComponent extends Component {
 
           <Scene
             key="packageList"
-            component={ProviderList}
+            component={PackageList}
             title="List Paket"
-          />
-
-          <Scene
-            key="detailForm"
-            component={DetailForm}
-            title="Form Detail"
           />
         </Scene>
 
@@ -82,6 +82,12 @@ class RouterComponent extends Component {
   };
 };
 // title will be shown at the navbar on the top of the screen
+
+// <Scene
+//   key="detailForm"
+//   component={DetailForm}
+//   title="Form Detail"
+// />
 
 export default connect (null, {
   backPage
