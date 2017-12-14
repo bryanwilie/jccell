@@ -28,10 +28,27 @@ class ItemList extends Component{
     this.createDataSource(nextProps);
   }
 
+  compare(a,b) {
+    const childA = a.name.toUpperCase();
+    const childB = b.name.toUpperCase();
+
+    let comparison = 0;
+    if (childA > childB) {
+      comparison = 1;
+    } else if (childA < childB) {
+      comparison = -1;
+    }
+
+    return comparison;
+  }
+
   createDataSource({ items }){
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
+    console.log(items);
+
+    console.log(items.sort(this.compare));
 
     this.dataSource = ds.cloneWithRows(items);
   }

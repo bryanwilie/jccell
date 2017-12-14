@@ -35,7 +35,7 @@ export const itemsFetch = () => {
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/items`)
       .on('value', snapshot => {
-        dispatch({ type: ITEMS_FETCH_SUCCESS, payload: snapshot.val() });
+        dispatch({ type: ITEMS_FETCH_SUCCESS, payload: snapshot.val()});
       });
   };
 };
