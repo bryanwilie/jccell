@@ -3,7 +3,8 @@ import {
   ITEM_CREATE,
   ITEM_SAVE_SUCCESS,
   ITEM_DELETE,
-  BACK_PAGE
+  BACK_PAGE,
+  SEND_SMS_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -32,6 +33,8 @@ export default (state = INITIAL_STATE, action) => {
     case ITEM_DELETE:
       return INITIAL_STATE;
     case BACK_PAGE:
+      return INITIAL_STATE;
+    case SEND_SMS_SUCCESS:
       return INITIAL_STATE;
     default:
       return state;

@@ -7,6 +7,7 @@ import ItemCreate from './components/ItemCreate';
 import ItemEdit from './components/ItemEdit';
 import ProviderList from './components/ProviderList';
 import PackageList from './components/PackageList';
+import CustomerForm from './components/CustomerForm';
 import { backPage } from './actions';
 
 class RouterComponent extends Component {
@@ -43,6 +44,12 @@ class RouterComponent extends Component {
             key="packageList"
             component={PackageList}
             title="List Paket"
+          />
+
+          <Scene
+            key="customerForm"
+            component={CustomerForm}
+            title="Form Detail"
           />
         </Scene>
 
@@ -82,12 +89,6 @@ class RouterComponent extends Component {
   };
 };
 // title will be shown at the navbar on the top of the screen
-
-// <Scene
-//   key="detailForm"
-//   component={DetailForm}
-//   title="Form Detail"
-// />
 
 export default connect (null, {
   backPage

@@ -10,3 +10,5 @@ export const ITEMS_FETCH_SUCCESS = 'items_fetch_success';
 export const ITEM_SAVE_SUCCESS = 'item_save_success';
 export const ITEM_DELETE = "item_delete";
 export const BACK_PAGE = "back_page";
+export const CUSTOMER_FORM_UPDATE = "customer_form_update";
+export const SEND_SMS_SUCCESS = "send_sms";
