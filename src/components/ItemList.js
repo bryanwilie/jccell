@@ -28,7 +28,8 @@ class ItemList extends Component{
     this.createDataSource(nextProps);
   }
 
-  compare(a,b) {
+  compareName(a, b) {
+    // careful, not reusable, make a keyField update
     const childA = a.name.toUpperCase();
     const childB = b.name.toUpperCase();
 
@@ -48,7 +49,9 @@ class ItemList extends Component{
     });
     console.log(items);
 
-    console.log(items.sort(this.compare));
+    console.log(items.sort(this.compareName));
+
+    console.log(items.map(items => items.name));
 
     this.dataSource = ds.cloneWithRows(items);
   }
