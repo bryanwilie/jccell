@@ -16,12 +16,18 @@ class LoginForm extends Component {
 
   onLogin() {
     const { email, password } = this.props;
+    var skip = 'false';
 
-    this.props.loginUser({ email, password });
+    this.props.loginUser({ email, password, skip });
   }
 
   onSkip() {
-    // your code here
+    // later receive from default email
+    var email = "test@test.com";
+    var password = "password";
+    var skip = 'true';
+
+    this.props.loginUser({ email, password, skip});
   }
 
   renderLoginButton() {

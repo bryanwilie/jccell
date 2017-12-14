@@ -47,11 +47,8 @@ class ItemList extends Component{
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    console.log(items);
 
-    console.log(items.sort(this.compareName));
-
-    console.log(items.map(items => items.name));
+    items.sort(this.compareName);
 
     this.dataSource = ds.cloneWithRows(items);
   }

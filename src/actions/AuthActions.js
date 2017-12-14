@@ -22,7 +22,7 @@ export const passwordChanged = (text) => {
   };
 };
 
-export const loginUser = ({ email, password }) => {
+export const loginUser = ({ email, password, skip }) => {
   return(dispatch) => { // some asynchronous action is gonna happened here
     // can't immediately return an action! call dispatch to dispatch!
 
@@ -36,13 +36,13 @@ export const loginUser = ({ email, password }) => {
         // manually passed off to dispatch
         // ==> this writing style is too messy, create a HELPER FUNCTION (loginUserSuccess) for that purpose
       //});
-      .then(user => loginUserSuccess(dispatch, user))
+      .then(user => loginUserSuccess(dispatch, user, skip))
       .catch((error) => {
         console.log(error);
         //console.log(error); =>> expect to see banana
 
         firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(user => loginUserSuccess(dispatch, user))
+          .then(user => loginUserSuccess(dispatch, user, skip))
           .catch(() => loginUserFail(dispatch));
       });
   };
@@ -53,11 +53,15 @@ const loginUserFail = (dispatch) => {
   dispatch({ type: LOGIN_USER_FAIL });
 };
 
-const loginUserSuccess = (dispatch, user) => {
+const loginUserSuccess = (dispatch, user, skip) => {
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
 
-  Actions.main();
+  if (!(skip)) {
+    Actions.manager();
+  } else if (skip) {
+    Actions.main();
+  }
 };

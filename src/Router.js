@@ -5,6 +5,7 @@ import LoginForm from './components/LoginForm';
 import ItemList from './components/ItemList';
 import ItemCreate from './components/ItemCreate';
 import ItemEdit from './components/ItemEdit';
+import ProviderList from './components/ProviderList';
 import { backPage } from './actions';
 
 class RouterComponent extends Component {
@@ -23,8 +24,31 @@ class RouterComponent extends Component {
             />
         </Scene>
 
+
         <Scene key="main">
           <Scene
+            initial
+            key="providerList"
+            component={ProviderList}
+            title="Provider List"
+          />
+
+          <Scene
+            key="packageList"
+            component={ProviderList}
+            title="List Paket"
+          />
+
+          <Scene
+            key="detailForm"
+            component={DetailForm}
+            title="Form Detail"
+          />
+        </Scene>
+
+        <Scene key="manager">
+          <Scene
+            initial
             onRight={() => Actions.itemCreate()}
             rightTitle="Add New"
             onLeft={() => {
@@ -35,7 +59,6 @@ class RouterComponent extends Component {
             key="itemList"
             component={ItemList}
             title="Items"
-            initial
           />
 
           <Scene
