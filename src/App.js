@@ -22,9 +22,6 @@ class App extends Component {
 
   render() {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
-    // second argument is for any initial state that we want to pass to our redux app
-    // optional, server side renderring
-    // third argument => store enhancer, adding additional func to the store
     return (
       <Provider store={store}>
         <Router />

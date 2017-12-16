@@ -7,8 +7,7 @@ const Card = (props) => {
       {props.children}
     </View>
   );
-};
-// THE REAL MAGIC
+};=
 
 const styles = {
   containerStyle: {

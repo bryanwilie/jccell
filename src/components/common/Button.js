@@ -33,7 +33,5 @@ const styles = {
     marginRight: 5
   }
 };
-// flex -> fill as much content as it possibly can
 
 export { Button };
-// should be { Button: Button} but ES6 will condense it to ( Button )

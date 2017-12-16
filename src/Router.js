@@ -33,7 +33,7 @@ class RouterComponent extends Component {
               Actions.pop()
               Actions.login()
             }}
-            leftTitle="Sign In"
+            leftTitle="Log In"
             key="providerList"
             component={ProviderList}
             title="Provider List"

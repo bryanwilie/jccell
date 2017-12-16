@@ -8,7 +8,6 @@ const Spinner = ({ size }) => {
     </View>
   );
 };
-// if we pass size, use size, if no, use large
 
 const styles = {
   spinnerStyle: {

@@ -1,8 +1,6 @@
-// Import libraries for making a componenet
 import React from 'react';
 import { Text, View } from 'react-native';
 
-// Make a component
 const Header = (props) => {
   const { textStyle, viewStyle } = styles;
 
@@ -10,12 +8,12 @@ const Header = (props) => {
     <View style={viewStyle}>
       <Text style={textStyle}>{props.headerText}</Text>
     </View>
-  ); // style = is a props
+  );
 };
 
 const styles = {
   viewStyle: {
-    backgroundColor: '#F8F8F8', //eggwhite
+    backgroundColor: '#F8F8F8',
     justifyContent: 'center',
     alignItems: 'center',
     height: 60,
@@ -27,9 +25,8 @@ const styles = {
     position: 'relative'
   },
   textStyle: {
-    fontSize: 20 // like CSS, but not dash casing
+    fontSize: 20
   }
 };
 
-// Make the componenet available to other parts  of the App
 export { Header };
