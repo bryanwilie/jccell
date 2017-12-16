@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { customerFormUpdate, backPage, sendSms } from '../actions';
-import { CardSection, Input, Button, Confirm, Succeed } from './common';
+import { customerFormUpdate, hardwareBackCustomer, sendSms } from '../actions';
+import { CardSection, Input, Button, Confirm } from './common';
+import Succeed from './common/Succeed';
 
 class CustomerForm extends Component {
   state = { showConfirm: false, showSucceed: false };
@@ -17,7 +18,7 @@ class CustomerForm extends Component {
   }
 
   handleBackButton = () => {
-    this.props.backPage();
+    this.props.hardwareBackCustomer();
     return true;
   }
 
@@ -25,6 +26,7 @@ class CustomerForm extends Component {
     const { name, detail, size, price, code } = this.props.item;
     const { phone, pin } = this.props;
 
+    this.setState({ showSucceed: !this.state.showSucceed })
     this.props.sendSms({ phone, pin, name, detail, size, price, code });
   }
 
@@ -77,10 +79,9 @@ class CustomerForm extends Component {
         </Confirm>
 
         <Succeed
-          visible={this.state.showSucceed}
-        >
-          Transaksi berhasil!
-        </Succeed>
+          visible= {this.state.showSucceed}
+          children= "Transaksi berhasil!"
+        />
       </View>
     );
   }
@@ -102,5 +103,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  customerFormUpdate, backPage, sendSms
+  customerFormUpdate, hardwareBackCustomer, sendSms
 }) ( CustomerForm );

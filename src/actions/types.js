@@ -12,3 +12,5 @@ export const ITEM_DELETE = "item_delete";
 export const BACK_PAGE = "back_page";
 export const CUSTOMER_FORM_UPDATE = "customer_form_update";
 export const SEND_SMS_SUCCESS = "send_sms";
+export const BACK_CUSTOMER = "back_customer";
+export const HARDWARE_BACK_CUSTOMER = "hardware_back_customer";

@@ -1,25 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Text, View, Modal } from 'react-native';
 import { CardSection } from './CardSection';
 
-const Succeed = ({ children, visible }) => {
-  const { containerStyle, textStyle, cardSectionStyle } = styles;
+class Succeed extends Component {
+  // componentDidMount() {
+  //   this.timeoutHandle = setTimeout(() =>{}, 5000);
+  // }
+  //
+  // componentWillUnmount() {
+  //   clearTimeout(this.timoutHandle);
+  // }
 
-  return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="slide"
-      onRequestClose={() => {}}
-    >
-      <View style={containerStyle}>
-        <CardSection style={cardSectionStyle}>
-          <Text style={textStyle}>{children}</Text>
-        </CardSection>
-      </View>
-    </Modal>
-  );
-};
+  render() {
+    const { containerStyle, textStyle, cardSectionStyle } = styles;
+
+    return (
+      <Modal
+        visible={this.props.visible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => {}}
+      >
+        <View style={containerStyle}>
+          <CardSection style={cardSectionStyle}>
+            <Text style={textStyle}>{this.props.children}</Text>
+          </CardSection>
+        </View>
+      </Modal>
+    );
+  }
+}
 
 const styles = {
   cardSectionStyle: {
@@ -39,4 +49,4 @@ const styles = {
   }
 };
 
-export { Succeed };
+export default Succeed;

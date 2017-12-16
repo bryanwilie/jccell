@@ -25,7 +25,7 @@ export default (state = INITIAL_STATE, action) => {
     case LOGIN_USER:
       return { ...state, loadingLogin: true, error: '' };
     case SKIP_USER:
-      return { ...state, loadingSkip: true, error: ''};
+      return { ...state, loadingSkip: true, error: '' };
     case LOGIN_USER_SUCCESS:
       return { ...state, ...INITIAL_STATE, user: action.payload };
     case LOGIN_USER_FAIL:

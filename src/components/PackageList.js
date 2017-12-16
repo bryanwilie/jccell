@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ListView, BackHandler } from 'react-native';
-import { itemsFetch } from '../actions';
+import { itemsFetch, hardwareBackCustomer } from '../actions';
 import ListPackage from './ListPackage';
 import { CardSection } from './common';
 
@@ -16,6 +16,7 @@ class PackageList extends Component{
   }
 
   handleBackButton = () => {
+    this.props.hardwareBackCustomer();
     return true;
   }
 
@@ -50,7 +51,7 @@ class PackageList extends Component{
 
     items.sort(this.compareName);
 
-    const filteredItems = _.filter(items, {name: this.props.item})
+    const filteredItems = _.filter(items, {name: this.props.selectedProvider})
 
     this.dataSource = ds.cloneWithRows(filteredItems);
   }
@@ -98,7 +99,9 @@ const mapStateToProps = state => {
     return {...val, uid};
   });
 
-  return { items };
+  const { selectedProvider } = state.customerForm;
+
+  return { items, selectedProvider };
 };
 
-export default connect(mapStateToProps, { itemsFetch })( PackageList );
+export default connect(mapStateToProps, { itemsFetch, hardwareBackCustomer })( PackageList );

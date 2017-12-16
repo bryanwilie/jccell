@@ -24,10 +24,11 @@ export const passwordChanged = (text) => {
 };
 
 export const loginUser = ({ email, password, skip }) => {
+
   return(dispatch) => {
     if(!(skip)) {
       dispatch({ type: LOGIN_USER });
-    } else {
+    } else if (skip) {
       dispatch({ type: SKIP_USER });
     }
 
@@ -47,6 +48,7 @@ const loginUserFail = (dispatch) => {
 };
 
 const loginUserSuccess = (dispatch, user, skip) => {
+
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user

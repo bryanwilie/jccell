@@ -8,11 +8,15 @@ import ItemEdit from './components/ItemEdit';
 import ProviderList from './components/ProviderList';
 import PackageList from './components/PackageList';
 import CustomerForm from './components/CustomerForm';
-import { backPage } from './actions';
+import { backPage, backCustomer } from './actions';
 
 class RouterComponent extends Component {
-  onBackFunction() {
+  onBackPageFunction() {
     this.props.backPage();
+  }
+
+  onBackCustomerFunction() {
+    this.props.backCustomer();
   }
 
   render() {
@@ -29,24 +33,32 @@ class RouterComponent extends Component {
         <Scene key="main">
           <Scene
             initial
+            key="providerList"
             onLeft={() => {
               Actions.pop()
               Actions.login()
             }}
             leftTitle="Log In"
-            key="providerList"
             component={ProviderList}
             title="Provider List"
           />
 
           <Scene
             key="packageList"
+            onBack={() => {
+              this.onBackCustomerFunction()
+              Actions.providerList()
+            }}
             component={PackageList}
             title="List Paket"
           />
 
           <Scene
             key="customerForm"
+            onBack={() => {
+              this.onBackCustomerFunction()
+              Actions.packageList()
+            }}
             component={CustomerForm}
             title="Form Detail"
           />
@@ -55,6 +67,7 @@ class RouterComponent extends Component {
         <Scene key="manager">
           <Scene
             initial
+            key="itemList"
             onRight={() => Actions.itemCreate()}
             rightTitle="Add New"
             onLeft={() => {
@@ -62,7 +75,6 @@ class RouterComponent extends Component {
               Actions.login()
             }}
             leftTitle="Log Out"
-            key="itemList"
             component={ItemList}
             title="Items"
           />
@@ -77,7 +89,7 @@ class RouterComponent extends Component {
             key='itemEdit'
             onBack={() => {
               Actions.itemList()
-              this.onBackFunction()
+              this.onBackPageFunction()
             }}
             component={ItemEdit}
             title="Edit Item"
@@ -89,5 +101,5 @@ class RouterComponent extends Component {
 };
 
 export default connect (null, {
-  backPage
+  backPage, backCustomer
 })(RouterComponent);
