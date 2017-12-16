@@ -53,15 +53,19 @@ const loginUserFail = (dispatch) => {
   dispatch({ type: LOGIN_USER_FAIL });
 };
 
-const loginUserSuccess = (dispatch, user, skip) => {
+const loginUserSuccess = (dispatch, user) => {
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
 
-  if (!(skip)) {
-    Actions.manager();
-  } else if (skip) {
-    Actions.main();
-  }
+  Actions.manager();
+
+  // if (!(skip)) {
+  //   Actions.manager();
+  // } else if (skip) {
+  //   //Actions.main();
+  // }
 };
+
+//skip

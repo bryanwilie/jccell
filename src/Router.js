@@ -5,9 +5,9 @@ import LoginForm from './components/LoginForm';
 import ItemList from './components/ItemList';
 import ItemCreate from './components/ItemCreate';
 import ItemEdit from './components/ItemEdit';
-import ProviderList from './components/ProviderList';
-import PackageList from './components/PackageList';
-import CustomerForm from './components/CustomerForm';
+//import ProviderList from './components/ProviderList';
+//import PackageList from './components/PackageList';
+//import CustomerForm from './components/CustomerForm';
 import { backPage } from './actions';
 
 class RouterComponent extends Component {
@@ -27,31 +27,7 @@ class RouterComponent extends Component {
         </Scene>
 
 
-        <Scene key="main">
-          <Scene
-            initial
-            onLeft={() => {
-              Actions.pop()
-              Actions.login()
-            }}
-            leftTitle="Sign In"
-            key="providerList"
-            component={ProviderList}
-            title="Provider List"
-          />
 
-          <Scene
-            key="packageList"
-            component={PackageList}
-            title="List Paket"
-          />
-
-          <Scene
-            key="customerForm"
-            component={CustomerForm}
-            title="Form Detail"
-          />
-        </Scene>
 
         <Scene key="manager">
           <Scene
@@ -88,6 +64,33 @@ class RouterComponent extends Component {
     ); // paddingTop 60 on Android
   };
 };
+
+// <Scene key="main">
+//   <Scene
+//     initial
+//     onLeft={() => {
+//       Actions.pop()
+//       Actions.login()
+//     }}
+//     leftTitle="Sign In"
+//     key="providerList"
+//     component={ProviderList}
+//     title="Provider List"
+//   />
+//
+//   <Scene
+//     key="packageList"
+//     component={PackageList}
+//     title="List Paket"
+//   />
+//
+//   <Scene
+//     key="customerForm"
+//     component={CustomerForm}
+//     title="Form Detail"
+//   />
+// </Scene>
+
 // title will be shown at the navbar on the top of the screen
 
 export default connect (null, {
