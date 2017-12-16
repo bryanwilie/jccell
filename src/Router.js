@@ -47,7 +47,7 @@ class RouterComponent extends Component {
             key="packageList"
             onBack={() => {
               this.onBackCustomerFunction()
-              Actions.providerList()
+              Actions.providerList({ type: 'reset' })
             }}
             component={PackageList}
             title="List Paket"

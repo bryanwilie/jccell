@@ -8,4 +8,4 @@ console.ignoredYellowBox = [
   'Setting a timer'
 ];
 
-AppRegistry.registerComponent('manager', () => App);
+AppRegistry.registerComponent('jccell', () => App);

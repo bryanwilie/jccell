@@ -35,6 +35,10 @@ class CustomerForm extends Component {
   }
 
   render() {
+    const { name, detail, size, price, code } = this.props.item;
+    const { phone, pin } = this.props;
+
+    (name).toUpperCase()
 
     return (
       <View>
@@ -46,22 +50,23 @@ class CustomerForm extends Component {
           <Input
             label="Nomor HP"
             placeholder="0811 222 333 44"
-            value={this.props.phone}
+            value={phone}
             onChangeText={value => this.props.customerFormUpdate({ prop: 'phone', value })}
           />
         </CardSection>
 
         <CardSection>
           <Input
+            secureTextEntry
             label="PIN"
             placeholder="123456"
-            value={this.props.pin}
+            value={pin}
             onChangeText={value => this.props.customerFormUpdate({ prop: 'pin', value })}
           />
         </CardSection>
 
         <Text style={styles.textStyle}>
-          Total pembelanjaan anda adalah Rp {this.props.item.price}
+          Total pembelanjaan anda adalah Rp {price}
         </Text>
 
         <CardSection>
