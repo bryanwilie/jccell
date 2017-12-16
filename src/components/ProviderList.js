@@ -52,8 +52,6 @@ class ProviderList extends Component{
 
     const filteredItems = _.uniq(_.map(items, "name"));
 
-    console.log(filteredItems);
-
     this.dataSource = ds.cloneWithRows(filteredItems);
   }
 

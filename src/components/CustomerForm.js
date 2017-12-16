@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Picker, BackHandler } from 'react-native';
-import { Dropdown } from 'react-native-material-dropdown';
+import { View, Text, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { itemUpdate, backPage } from '../actions';
-import { CardSection, Input } from './common';
+import { customerFormUpdate, backPage, sendSms } from '../actions';
+import { CardSection, Input, Button, Confirm, Succeed } from './common';
 
 class CustomerForm extends Component {
+  state = { showConfirm: false, showSucceed: false };
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
@@ -20,84 +21,86 @@ class CustomerForm extends Component {
     return true;
   }
 
+  onAccept() {
+    const { name, detail, size, price, code } = this.props.item;
+    const { phone, pin } = this.props;
+
+    this.props.sendSms({ phone, pin, name, detail, size, price, code });
+  }
+
+  onDecline() {
+    this.setState({ showConfirm: false });
+  }
+
   render() {
-    let details = [{
-      value: 'pulsa', }, { value: 'data', }, { value: 'sms', }, {
-      value: 'saldo', }, { value: 'top-up', }, { value: 'e-money',
-    }];
 
     return (
       <View>
+        <Text style={styles.textStyle}>
+          Silahkan isi nomor HP dan PIN anda
+        </Text>
+
         <CardSection>
           <Input
-            label="Nama Operator"
-            placeholder="Operator"
-            value={this.props.name}
-            onChangeText={value => this.props.itemUpdate({ prop: 'name', value })}
-          />
-        </CardSection>
-
-        <CardSection style={{ flexDirection: 'row' }}>
-          <Text style={styles.pickerTextStyle}>Jenis</Text>
-          <Dropdown
-            label=""
-            containerStyle={styles.containerStyle}
-            data={details}
-            value={this.props.detail}
-            onChangeText={value => this.props.itemUpdate({ prop: 'detail', value })}
+            label="Nomor HP"
+            placeholder="0811 222 333 44"
+            value={this.props.phone}
+            onChangeText={value => this.props.customerFormUpdate({ prop: 'phone', value })}
           />
         </CardSection>
 
         <CardSection>
           <Input
-            label="Besarnya"
-            placeholder="5k, 100k, 2000k, 10 GB"
-            value={this.props.size}
-            onChangeText={value => this.props.itemUpdate({ prop: 'size', value })}
+            label="PIN"
+            placeholder="123456"
+            value={this.props.pin}
+            onChangeText={value => this.props.customerFormUpdate({ prop: 'pin', value })}
           />
         </CardSection>
 
-        <CardSection>
-          <Input
-            label="Harga"
-            placeholder="4.5k, 25.5k, 50k"
-            value={this.props.price}
-            onChangeText={value => this.props.itemUpdate({ prop: 'price', value })}
-          />
-        </CardSection>
+        <Text style={styles.textStyle}>
+          Total pembelanjaan anda adalah Rp {this.props.item.price}
+        </Text>
 
         <CardSection>
-          <Input
-            label="Kode Produk"
-            placeholder="S25, GOPAY150"
-            value={this.props.code}
-            onChangeText={value => this.props.itemUpdate({ prop: 'code', value })}
-          />
+          <Button onPress={() => this.setState({ showConfirm: !this.state.showConfirm })}>
+            Lanjut
+          </Button>
         </CardSection>
+
+        <Confirm
+          visible={this.state.showConfirm}
+          onAccept={this.onAccept.bind(this)}
+          onDecline={this.onDecline.bind(this)}
+        >
+          Apakah semua data yang diinput sudah benar?
+        </Confirm>
+
+        <Succeed
+          visible={this.state.showSucceed}
+        >
+          Transaksi berhasil!
+        </Succeed>
       </View>
     );
   }
 }
 
 const styles = {
-  containerStyle: {
-    flex: 2,
-    height: 40,
-    justifyContent: 'center'
-  },
-  pickerTextStyle: {
-    flex: 1,
+  textStyle: {
     fontSize: 18,
-    paddingLeft: 20
+    paddingLeft: 15,
+    paddingTop: 10,
+    paddingBottom: 10
   }
 }
 
 const mapStateToProps = (state) => {
-  const { name, detail, size, price, code } = state.itemForm;
+  const { phone, pin } = state.customerForm;
 
-  return { name, detail, size, price, code };
+  return { phone, pin };
 };
 
 export default connect(mapStateToProps, {
-  itemUpdate, backPage
-}) ( ItemForm );
+  customerFormUpdate, backPage, sendSms
+}) ( CustomerForm );

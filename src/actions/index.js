@@ -1,3 +1,3 @@
 export * from './AuthActions';
 export * from './ItemActions';
-//export * from './CustomerActions';
+export * from './CustomerActions';

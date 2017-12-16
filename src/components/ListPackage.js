@@ -5,7 +5,7 @@ import { CardSection } from './common';
 
 class ListPackage extends Component {
   onRowPress() {
-    Actions.itemEdit({ item: this.props.item });
+    Actions.customerForm({ item: this.props.item });
   }
 
   render() {
