@@ -31,7 +31,7 @@ class LoginForm extends Component {
   }
 
   renderLoginButton() {
-    if (this.props.loading) {
+    if (this.props.loadingLogin) {
       return <Spinner size="large" />;
     }
 
@@ -43,7 +43,7 @@ class LoginForm extends Component {
   }
 
   renderSkipButton() {
-    if (this.props.loading) {
+    if (this.props.loadingSkip) {
       return <Spinner size="large" />;
     }
 
@@ -101,9 +101,9 @@ const styles = {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading } = auth;
+  const { email, password, error, loadingLogin, loadingSkip } = auth;
 
-  return { email, password, error, loading };
+  return { email, password, error, loadingLogin, loadingSkip };
 };
 
 export default connect(mapStateToProps, {
