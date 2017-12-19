@@ -26,7 +26,7 @@ class RouterComponent extends Component {
           <Scene
             key="login"
             component={LoginForm}
-            title="Please Login"
+            title="Welcome"
             />
         </Scene>
 
