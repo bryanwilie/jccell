@@ -7,7 +7,7 @@ import { CardSection, Input, Button, Confirm } from './common';
 import Succeed from './common/Succeed';
 
 class CustomerForm extends Component {
-  state = { showConfirm: false, showSucceed: false };
+  state = { showConfirm: false, showSucceed: false, timePassed: false};
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -26,7 +26,13 @@ class CustomerForm extends Component {
     const { name, detail, size, price, code } = this.props.item;
     const { phone, pin } = this.props;
 
-    this.setState({ showSucceed: !this.state.showSucceed })
+    setTimeout(() => {this.setState({timePassed: true})}, 1000);
+    if (!this.state.timePassed){
+      this.setState({ showSucceed: !this.state.showSucceed });
+    } else {
+      this.setState({ showSucceed: false});
+    }
+
     this.props.sendSms({ phone, pin, name, detail, size, price, code });
   }
 
