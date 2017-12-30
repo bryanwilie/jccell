@@ -6,7 +6,8 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
   LOGIN_USER,
-  SKIP_USER
+  SKIP_USER,
+  LOGGED_IN
 } from './types';
 
 export const emailChanged = (text) => {
@@ -23,32 +24,85 @@ export const passwordChanged = (text) => {
   };
 };
 
-export const loginUser = ({ email, password, skip }) => {
-
-  return(dispatch) => {
-    if(!(skip)) {
-      dispatch({ type: LOGIN_USER });
-    } else if (skip) {
-      dispatch({ type: SKIP_USER });
-    }
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(user => loginUserSuccess(dispatch, user, skip))
-      .catch((error) => {
-        console.log(error);
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-          .then(user => loginUserSuccess(dispatch, user, skip))
-          .catch(() => loginUserFail(dispatch));
-      });
+export const setSignUp = (value) => {
+  return () => {
+    firebase.database().ref(`/defaultAccount`)
+      .update({
+        signUpSwitch: value })
   };
 };
 
-const loginUserFail = (dispatch) => {
-  dispatch({ type: LOGIN_USER_FAIL });
+export const loginUser = ({ email, password, useAsCatalogue, allowSignUp, skip }) => {
+
+  return(dispatch) => {
+    if(skip){
+      if(useAsCatalogue){
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(user => loginUserSuccess(dispatch, user, skip))
+          .catch((error) => {
+            console.log('Email and Password stored as default cant be logged in');
+            loginUserFail(dispatch, "Catalogue Not Available");
+            });
+        dispatch({type: SKIP_USER });
+      } else {
+        console.log('Email and Password stored as default but user dont want it to be the Catalogue for customer');
+        loginUserFail(dispatch, "Catalogue Not Available");
+      }
+
+    } else if (!(skip)) {
+      if(allowSignUp){
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(user => {
+            loginUserSuccess(dispatch, user, skip);
+            dispatch({type: LOGGED_IN, payload: {email, password} });
+            // firebase.database().ref(`/defaultAccount`)
+            //   .update({ defaultEmail: email, defaultPassword: password, useAsCatalogue });
+            })
+          .catch((error) => {
+            console.log(error);
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+              .then(user => {
+                loginUserSuccess(dispatch, user, skip)
+                // firebase.database().ref(`/defaultAccount`)
+                //   .update({ defaultEmail: email, defaultPassword: password, useAsCatalogue });
+                })
+              .catch((error) => {
+                console.log(error);
+                if (error.code == "auth/weak-password") {
+                  loginUserFail(dispatch, error.message);
+                } else {
+                  loginUserFail(dispatch, "Authentication Failed");
+                }
+              });
+            });
+        dispatch({type: LOGIN_USER });
+      } else {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(user => {
+            loginUserSuccess(dispatch, user, skip);
+            // firebase.database().ref(`/defaultAccount`)
+            //   .update({ defaultEmail: email, defaultPassword: password, useAsCatalogue });
+            })
+          .catch((error) => {
+            console.log(error);
+            if (error.code == "auth/weak-password") {
+              loginUserFail(dispatch, error.message);
+            } else {
+              loginUserFail(dispatch, "Authentication Failed");
+            }
+          });
+        dispatch({type: LOGIN_USER });
+      }
+
+    }
+  };
+};
+
+const loginUserFail = (dispatch, message) => {
+  dispatch({ type: LOGIN_USER_FAIL, payload: message});
 };
 
 const loginUserSuccess = (dispatch, user, skip) => {
-
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user

@@ -8,6 +8,7 @@ import ItemEdit from './components/ItemEdit';
 import ProviderList from './components/ProviderList';
 import PackageList from './components/PackageList';
 import CustomerForm from './components/CustomerForm';
+import UserPage from './components/UserPage';
 import { backPage, backCustomer } from './actions';
 
 class RouterComponent extends Component {
@@ -67,14 +68,20 @@ class RouterComponent extends Component {
         <Scene key="manager">
           <Scene
             initial
-            key="itemList"
-            onRight={() => Actions.itemCreate()}
-            rightTitle="Add New"
+            key="userPage"
             onLeft={() => {
               Actions.pop()
               Actions.login()
             }}
             leftTitle="Log Out"
+            component={UserPage}
+            title="Hello Manager"
+          />
+
+          <Scene
+            key="itemList"
+            onRight={() => Actions.itemCreate()}
+            rightTitle="Add New"
             component={ItemList}
             title="Items"
           />
@@ -99,6 +106,7 @@ class RouterComponent extends Component {
     ); // paddingTop 60 on Android
   };
 };
+
 
 export default connect (null, {
   backPage, backCustomer

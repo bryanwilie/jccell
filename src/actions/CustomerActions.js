@@ -1,16 +1,49 @@
+import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import { Text } from 'react-native-openanything';
 import {
   CUSTOMER_FORM_UPDATE,
   SEND_SMS_SUCCESS,
   BACK_CUSTOMER,
-  HARDWARE_BACK_CUSTOMER
+  HARDWARE_BACK_CUSTOMER,
+  DEFAULT_FETCH_SUCCESS,
+  SET_DEFAULT_SUCCESS
 } from './types';
 
+export const defaultAccountFetch = () => {
+  return (dispatch) => {
+    firebase.database().ref(`/defaultAccount`)
+      .on('value', snapshot => {
+        dispatch({ type: DEFAULT_FETCH_SUCCESS, payload: snapshot.val()});
+      });
+  };
+};
+
+export const setDefaultSuccess = ({value, loggedInEmail, loggedInPassword}) => {
+  return () => {
+    if (value) {
+      firebase.database().ref(`/defaultAccount`)
+        .update({
+          defaultEmail: loggedInEmail,
+          defaultPassword: loggedInPassword,
+          useAsCatalogue: value })
+    } else {
+      firebase.database().ref(`/defaultAccount`)
+        .update({
+          defaultEmail: 'a',
+          defaultPassword: 'a',
+          useAsCatalogue: value })
+    }
+
+  };
+};
+
 export const customerFormUpdate = ({ prop, value }) => {
-  return {
-    type: CUSTOMER_FORM_UPDATE,
-    payload: { prop, value }
+  return(dispatch) => {
+    dispatch({
+      type: CUSTOMER_FORM_UPDATE,
+      payload: { prop, value }
+    });
   };
 };
 
@@ -22,7 +55,7 @@ export const sendSms = ({ phone, pin, name, detail, size, price, code }) => {
     .then(() => {
       dispatch({
         type: SEND_SMS_SUCCESS,
-        payload: { prop, value}
+        payload: { prop, value }
       });
     });
   };
@@ -30,7 +63,9 @@ export const sendSms = ({ phone, pin, name, detail, size, price, code }) => {
 
 export const backCustomer = () => {
   return(dispatch) => {
-    dispatch({ type: BACK_CUSTOMER });
+    dispatch({
+      type: BACK_CUSTOMER
+    });
   };
 };
 

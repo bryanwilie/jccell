@@ -94,7 +94,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const items = _.map(state.items, (val, uid) => {
     return {...val, uid};
   });

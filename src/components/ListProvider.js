@@ -8,9 +8,9 @@ import { CardSection } from './common';
 class ListProvider extends Component {
   onRowPress() {
     const { item } = this.props;
-    console.log(item);
+    
     this.props.customerFormUpdate({ prop: 'selectedProvider', value: (item) });
-    Actions.packageList({title: "List Paket " + (item).toUpperCase() });
+    Actions.packageList({ title: "List Paket " + (item).toUpperCase() });
   }
 
   render() {

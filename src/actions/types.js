@@ -14,3 +14,5 @@ export const CUSTOMER_FORM_UPDATE = "customer_form_update";
 export const SEND_SMS_SUCCESS = "send_sms";
 export const BACK_CUSTOMER = "back_customer";
 export const HARDWARE_BACK_CUSTOMER = "hardware_back_customer";
+export const DEFAULT_FETCH_SUCCESS = "default_fetch_success";
+export const LOGGED_IN = "logged_in";

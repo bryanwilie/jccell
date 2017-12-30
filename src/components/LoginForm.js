@@ -2,10 +2,17 @@ import React, { Component } from 'react';
 import { Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { defaultAccountFetch, emailChanged, passwordChanged, loginUser } from '../actions';
 import { Button, Card, CardSection, Input, Spinner } from './common';
 
 class LoginForm extends Component {
+  componentWillMount() {
+    this.props.defaultAccountFetch();
+  }
+
+  componentWillReceiveProps(nextProps) {
+  }
+
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
@@ -16,18 +23,23 @@ class LoginForm extends Component {
 
   onLogin() {
     const { email, password } = this.props;
-    var skip = false;
+    const { useAsCatalogue, signUpSwitch } = this.props;
 
-    this.props.loginUser({ email, password, skip });
+    var allowSignUp = signUpSwitch;
+    var skip = false;
+    
+    this.props.loginUser({ email, password, useAsCatalogue, allowSignUp, skip });
   }
 
   onImagePress() {
-    // later receive from default email
-    var email = "test@test.com";
-    var password = "password";
+    const { defaultEmail, defaultPassword, useAsCatalogue } = this.props;
+
+    var email = defaultEmail;
+    var password = defaultPassword;
+    var allowSignUp = false;
     var skip = true;
 
-    this.props.loginUser({ email, password, skip});
+    this.props.loginUser({ email, password, useAsCatalogue, allowSignUp, skip });
   }
 
   renderLoginButton() {
@@ -55,13 +67,15 @@ class LoginForm extends Component {
   }
 
   render() {
+    const {email, password, error} = this.props;
+
     return (
       <Card>
         <CardSection>
           <TouchableOpacity onPress={this.onImagePress.bind(this)} style= {styles.buttonStyle}>
             <Image
               source={require('../images/JCCell_cover.png')}
-              style= {styles.imageStyle}
+              style={styles.imageStyle}
             >
             </Image>
           </TouchableOpacity>
@@ -72,7 +86,7 @@ class LoginForm extends Component {
             label="Email"
             placeholder="email@gmail.com"
             onChangeText={this.onEmailChange.bind(this)}
-            value={this.props.email}
+            value={email}
           />
         </CardSection>
 
@@ -82,12 +96,12 @@ class LoginForm extends Component {
             label="Password"
             placeholder="password"
             onChangeText={this.onPasswordChange.bind(this)}
-            value={this.props.password}
+            value={password}
           />
         </CardSection>
 
         <Text style={styles.errorTextStyle}>
-         {this.props.error}
+         {error}
         </Text>
 
         <CardSection>
@@ -100,8 +114,10 @@ class LoginForm extends Component {
 
 const styles = {
   errorTextStyle: {
+    paddingTop: 5,
+    paddingBottom: 5,
     fontSize: 20,
-    alignSelf: 'center',
+    textAlign: 'center',
     color: 'red'
   },
   imageStyle: {
@@ -119,12 +135,13 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loadingLogin, loadingSkip } = auth;
+const mapStateToProps = (state) => {
+  const { email, password, error, loadingLogin, loadingSkip } = state.auth;
+  const { defaultEmail, defaultPassword, useAsCatalogue, signUpSwitch } = state.customerForm;
 
-  return { email, password, error, loadingLogin, loadingSkip };
+  return { email, password, error, loadingLogin, loadingSkip, defaultEmail, defaultPassword, useAsCatalogue, signUpSwitch };
 };
 
 export default connect(mapStateToProps, {
-  emailChanged, passwordChanged, loginUser
+  emailChanged, passwordChanged, loginUser, defaultAccountFetch
 })(LoginForm);
