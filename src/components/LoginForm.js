@@ -27,7 +27,7 @@ class LoginForm extends Component {
 
     var allowSignUp = signUpSwitch;
     var skip = false;
-    
+
     this.props.loginUser({ email, password, useAsCatalogue, allowSignUp, skip });
   }
 

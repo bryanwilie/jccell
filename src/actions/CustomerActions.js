@@ -34,7 +34,6 @@ export const setDefaultSuccess = ({value, loggedInEmail, loggedInPassword}) => {
           defaultPassword: 'a',
           useAsCatalogue: value })
     }
-
   };
 };
 

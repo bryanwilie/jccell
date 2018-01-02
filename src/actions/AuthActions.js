@@ -53,18 +53,17 @@ export const loginUser = ({ email, password, useAsCatalogue, allowSignUp, skip }
       if(allowSignUp){
         firebase.auth().signInWithEmailAndPassword(email, password)
           .then(user => {
+            console.log('before ' + email);
             loginUserSuccess(dispatch, user, skip);
+            console.log('after ' + email);
             dispatch({type: LOGGED_IN, payload: {email, password} });
-            // firebase.database().ref(`/defaultAccount`)
-            //   .update({ defaultEmail: email, defaultPassword: password, useAsCatalogue });
             })
           .catch((error) => {
             console.log(error);
             firebase.auth().createUserWithEmailAndPassword(email, password)
               .then(user => {
-                loginUserSuccess(dispatch, user, skip)
-                // firebase.database().ref(`/defaultAccount`)
-                //   .update({ defaultEmail: email, defaultPassword: password, useAsCatalogue });
+                loginUserSuccess(dispatch, user, skip);
+                dispatch({type: LOGGED_IN, payload: {email, password} });
                 })
               .catch((error) => {
                 console.log(error);
@@ -80,8 +79,7 @@ export const loginUser = ({ email, password, useAsCatalogue, allowSignUp, skip }
         firebase.auth().signInWithEmailAndPassword(email, password)
           .then(user => {
             loginUserSuccess(dispatch, user, skip);
-            // firebase.database().ref(`/defaultAccount`)
-            //   .update({ defaultEmail: email, defaultPassword: password, useAsCatalogue });
+            dispatch({type: LOGGED_IN, payload: {email, password} });
             })
           .catch((error) => {
             console.log(error);

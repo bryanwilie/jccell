@@ -121,7 +121,7 @@ const styles = {
 const mapStateToProps = (state) => {
   const { loggedInEmail, loggedInPassword, defaultEmail, defaultPassword, useAsCatalogue, signUpSwitch } = state.customerForm;
 
-  const defaultSwitchState = ((loggedInEmail == defaultEmail) && (loggedInPassword == defaultPassword))
+  const defaultSwitchState = ((loggedInEmail == defaultEmail) && (loggedInPassword == defaultPassword));
 
   return { loggedInEmail, loggedInPassword, defaultSwitchState, signUpSwitch };
 }
