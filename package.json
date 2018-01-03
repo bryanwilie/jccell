@@ -21,6 +21,7 @@
 		"react-native-material-dropdown": "^0.6.1",
 		"react-native-openanything": "0.0.3",
 		"react-native-router-flux": "^3.41.0",
+		"react-native-sms-android": "^0.4.1",
 		"react-number-format": "^3.1.0",
 		"react-redux": "^5.0.6",
 		"redux": "^3.7.2",

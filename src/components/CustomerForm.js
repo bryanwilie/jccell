@@ -7,7 +7,7 @@ import { CardSection, Input, Button, Confirm} from './common';
 import Announcement from './common/Announcement';
 
 class CustomerForm extends Component {
-  state = { showConfirm: false, showSucceed: false, showEmpty: false, showPhone: false, showPinNotANumber: false, showPinNotEnough: false};
+  state = { showConfirm: false, showSucceed: false, showEmpty: false, showPhone: false, showPinNotEnough: false};
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -29,8 +29,6 @@ class CustomerForm extends Component {
       this.setState({ showPhone: true });
     } else if (this.props.pin.length != 6) {
       this.setState({ showPinNotEnough: true });
-    } else if (this.props.pin.match(/^[0-9]/)) {
-      this.setState({ showPinNotANumber: true });
     } else {
       this.setState({ showConfirm: !this.state.showConfirm })
     }
@@ -38,11 +36,13 @@ class CustomerForm extends Component {
 
   onAccept() {
     const { name, detail, size, price, code } = this.props.item;
-    const { phone, pin } = this.props;
+    const { phone, pin, defaultPhone } = this.props;
+
+    console.log(defaultPhone);
 
     this.setState({ showSucceed: !this.state.showSucceed });
 
-    this.props.sendSms({ phone, pin, name, detail, size, price, code });
+    this.props.sendSms({ defaultPhone, phone, pin, name, detail, size, price, code });
   }
 
   onDecline() {
@@ -55,8 +55,7 @@ class CustomerForm extends Component {
       showConfirm: false,
       showEmpty: false,
       showPhone: false,
-      showPinNotEnough: false,
-      showPinNotANumber: false
+      showPinNotEnough: false
     });
   }
 
@@ -119,12 +118,6 @@ class CustomerForm extends Component {
           onRequestClose = {this.onRequestClose.bind(this)}
         />
 
-        <Announcement
-          visible = {this.state.showPinNotANumber}
-          children = "PIN hanya boleh berisi angka"
-          onRequestClose = {this.onRequestClose.bind(this)}
-        />
-
         <Confirm
           visible={this.state.showConfirm}
           onAccept={this.onAccept.bind(this)}
@@ -153,9 +146,9 @@ const styles = {
 }
 
 const mapStateToProps = (state) => {
-  const { phone, pin } = state.customerForm;
+  const { phone, pin, defaultPhone } = state.customerForm;
 
-  return { phone, pin };
+  return { phone, pin, defaultPhone };
 };
 
 export default connect(mapStateToProps, {

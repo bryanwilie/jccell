@@ -1,6 +1,7 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import { Text } from 'react-native-openanything';
+import SmsAndroid from 'react-native-sms-android';
 import {
   CUSTOMER_FORM_UPDATE,
   SEND_SMS_SUCCESS,
@@ -27,13 +28,15 @@ export const setDefaultSuccess = ({value, loggedInEmail, loggedInPassword}) => {
         .update({
           defaultEmail: loggedInEmail,
           defaultPassword: loggedInPassword,
-          useAsCatalogue: value })
+          useAsCatalogue: value
+        })
     } else {
       firebase.database().ref(`/defaultAccount`)
         .update({
           defaultEmail: 'a',
           defaultPassword: 'a',
-          useAsCatalogue: value })
+          useAsCatalogue: value
+        })
     }
   };
 };
@@ -65,17 +68,22 @@ export const defaultOwnerPhoneUpdate = (defaultPhone) => {
   };
 };
 
-export const sendSms = ({ phone, pin, name, detail, size, price, code }) => {
+export const sendSms = ({ defaultPhone, phone, pin, name, detail, size, price, code }) => {
   var message = (name) + '.' + (detail) + '.' + (size) + '.' + (phone) + '.' + (pin)
 
-  return (dispatch) => {
-    Text(phone, message)
-    .then(() => {
-      dispatch({
-        type: SEND_SMS_SUCCESS,
-        payload: { prop, value }
-      });
-    });
+  return() => {
+    SmsAndroid.sms(
+      defaultPhone,
+      message,
+      'sendDirect',
+      (err, message) => {
+        if (err) {
+          console.log("error");
+        } else {
+          console.log(message);
+        }
+      }
+    );
   };
 };
 
