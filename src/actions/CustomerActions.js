@@ -7,7 +7,8 @@ import {
   BACK_CUSTOMER,
   HARDWARE_BACK_CUSTOMER,
   DEFAULT_FETCH_SUCCESS,
-  SET_DEFAULT_SUCCESS
+  SET_DEFAULT_SUCCESS,
+  DEFAULT_PHONE_UPDATE
 } from './types';
 
 export const defaultAccountFetch = () => {
@@ -43,6 +44,24 @@ export const customerFormUpdate = ({ prop, value }) => {
       type: CUSTOMER_FORM_UPDATE,
       payload: { prop, value }
     });
+  };
+};
+
+export const ownerPhoneUpdate = ({ prop, value }) => {
+  return(dispatch) => {
+    dispatch({
+      type: DEFAULT_PHONE_UPDATE,
+      payload: { prop, value }
+    });
+  };
+};
+
+export const defaultOwnerPhoneUpdate = (defaultPhone) => {
+  return() => {
+    firebase.database().ref(`/defaultAccount`)
+      .update({
+        defaultPhone
+      });
   };
 };
 

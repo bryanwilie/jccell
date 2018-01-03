@@ -16,3 +16,4 @@ export const BACK_CUSTOMER = "back_customer";
 export const HARDWARE_BACK_CUSTOMER = "hardware_back_customer";
 export const DEFAULT_FETCH_SUCCESS = "default_fetch_success";
 export const LOGGED_IN = "logged_in";
+export const DEFAULT_PHONE_UPDATE = "default_phone_update";

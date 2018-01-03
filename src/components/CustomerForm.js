@@ -3,11 +3,11 @@ import { View, Text, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { customerFormUpdate, hardwareBackCustomer, sendSms } from '../actions';
-import { CardSection, Input, Button, Confirm } from './common';
-import Succeed from './common/Succeed';
+import { CardSection, Input, Button, Confirm} from './common';
+import Announcement from './common/Announcement';
 
 class CustomerForm extends Component {
-  state = { showConfirm: false, showSucceed: false, timePassed: false};
+  state = { showConfirm: false, showSucceed: false, showEmpty: false, showPhone: false, showPinNotANumber: false, showPinNotEnough: false};
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -22,22 +22,42 @@ class CustomerForm extends Component {
     return true;
   }
 
+  onButtonPress() {
+    if (((this.props.phone)=="")||((this.props.pin)=="")) {
+      this.setState({ showEmpty: true });
+    } else if (this.props.phone.length <= 8) {
+      this.setState({ showPhone: true });
+    } else if (this.props.pin.length != 6) {
+      this.setState({ showPinNotEnough: true });
+    } else if (this.props.pin.match(/^[0-9]/)) {
+      this.setState({ showPinNotANumber: true });
+    } else {
+      this.setState({ showConfirm: !this.state.showConfirm })
+    }
+  }
+
   onAccept() {
     const { name, detail, size, price, code } = this.props.item;
     const { phone, pin } = this.props;
 
-    setTimeout(() => {this.setState({timePassed: true})}, 1000);
-    if (!this.state.timePassed){
-      this.setState({ showSucceed: !this.state.showSucceed });
-    } else {
-      this.setState({ showSucceed: false});
-    }
+    this.setState({ showSucceed: !this.state.showSucceed });
 
     this.props.sendSms({ phone, pin, name, detail, size, price, code });
   }
 
   onDecline() {
     this.setState({ showConfirm: false });
+  }
+
+  onRequestClose() {
+    this.setState({
+      showSucceed: false,
+      showConfirm: false,
+      showEmpty: false,
+      showPhone: false,
+      showPinNotEnough: false,
+      showPinNotANumber: false
+    });
   }
 
   render() {
@@ -76,22 +96,47 @@ class CustomerForm extends Component {
         </Text>
 
         <CardSection>
-          <Button onPress={() => this.setState({ showConfirm: !this.state.showConfirm })}>
+          <Button onPress={this.onButtonPress.bind(this)}>
             Lanjut
           </Button>
         </CardSection>
+
+        <Announcement
+          visible = {this.state.showEmpty}
+          children = "Semua bagian harus diisi"
+          onRequestClose = {this.onRequestClose.bind(this)}
+        />
+
+        <Announcement
+          visible = {this.state.showPhone}
+          children = "Nomor hp tidak valid"
+          onRequestClose = {this.onRequestClose.bind(this)}
+        />
+
+        <Announcement
+          visible = {this.state.showPinNotEnough}
+          children = "PIN harus 6 digit"
+          onRequestClose = {this.onRequestClose.bind(this)}
+        />
+
+        <Announcement
+          visible = {this.state.showPinNotANumber}
+          children = "PIN hanya boleh berisi angka"
+          onRequestClose = {this.onRequestClose.bind(this)}
+        />
 
         <Confirm
           visible={this.state.showConfirm}
           onAccept={this.onAccept.bind(this)}
           onDecline={this.onDecline.bind(this)}
         >
-          Apakah semua data yang diinput sudah benar?
+          Apakah semua data yang dimasukkan sudah benar?
         </Confirm>
 
-        <Succeed
+        <Announcement
           visible= {this.state.showSucceed}
           children= "Transaksi berhasil!"
+          onRequestClose= {this.onRequestClose.bind(this)}
         />
       </View>
     );

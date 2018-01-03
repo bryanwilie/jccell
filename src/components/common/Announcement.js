@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, Modal } from 'react-native';
+import { Text, View, Modal, TouchableWithoutFeedback } from 'react-native';
 import { CardSection } from './CardSection';
 
-class Succeed extends Component {
-  // componentDidMount() {
-  //   this.timeoutHandle = setTimeout(() =>{}, 5000);
-  // }
-  //
-  // componentWillUnmount() {
-  //   clearTimeout(this.timoutHandle);
-  // }
+class Announcement extends Component {
 
   render() {
     const { containerStyle, textStyle, cardSectionStyle } = styles;
@@ -19,13 +12,16 @@ class Succeed extends Component {
         visible={this.props.visible}
         transparent
         animationType="slide"
-        onRequestClose={() => {}}
+        onRequestClose={() => {this.props.onRequestClose()}}
       >
-        <View style={containerStyle}>
-          <CardSection style={cardSectionStyle}>
-            <Text style={textStyle}>{this.props.children}</Text>
-          </CardSection>
-        </View>
+        <TouchableWithoutFeedback
+          onPress={() => {this.props.onRequestClose()}}>
+          <View style={containerStyle}>
+            <CardSection style={cardSectionStyle}>
+              <Text style={textStyle}>{this.props.children}</Text>
+            </CardSection>
+          </View>
+        </TouchableWithoutFeedback>
       </Modal>
     );
   }
@@ -49,4 +45,4 @@ const styles = {
   }
 };
 
-export default Succeed;
+export default Announcement;

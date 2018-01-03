@@ -53,9 +53,7 @@ export const loginUser = ({ email, password, useAsCatalogue, allowSignUp, skip }
       if(allowSignUp){
         firebase.auth().signInWithEmailAndPassword(email, password)
           .then(user => {
-            console.log('before ' + email);
             loginUserSuccess(dispatch, user, skip);
-            console.log('after ' + email);
             dispatch({type: LOGGED_IN, payload: {email, password} });
             })
           .catch((error) => {

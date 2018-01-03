@@ -4,7 +4,8 @@ import {
   BACK_CUSTOMER,
   HARDWARE_BACK_CUSTOMER,
   DEFAULT_FETCH_SUCCESS,
-  LOGGED_IN
+  LOGGED_IN,
+  DEFAULT_PHONE_UPDATE
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -16,7 +17,8 @@ const INITIAL_STATE = {
   useAsCatalogue: '',
   signUpSwitch: true,
   loggedInEmail: '',
-  loggedInPassword: ''
+  loggedInPassword: '',
+  defaultPhone: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -39,8 +41,11 @@ export default (state = INITIAL_STATE, action) => {
         defaultEmail: action.payload.defaultEmail.toLowerCase(),
         defaultPassword: action.payload.defaultPassword,
         useAsCatalogue: action.payload.useAsCatalogue,
-        signUpSwitch: action.payload.signUpSwitch
+        signUpSwitch: action.payload.signUpSwitch,
+        defaultPhone: action.payload.defaultPhone
       };
+    case DEFAULT_PHONE_UPDATE:
+      return { ...state, [action.payload.prop]: action.payload.value };
     default:
       return state;
   }
