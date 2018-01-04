@@ -24,7 +24,7 @@ export const itemCreate = ({ name, detail, size, price, code }) => {
       .push({ name, detail, size, price, code })
       .then(() => {
         dispatch({ type: ITEM_CREATE });
-        Actions.itemList({ type: 'reset' });
+        Actions.pop();
       });
   };
 };
@@ -48,7 +48,7 @@ export const itemSave = ({ name, detail, size, price, code, uid }) => {
       .set({ name, detail, size, price, code })
       .then(() => {
         dispatch({ type: ITEM_SAVE_SUCCESS });
-        Actions.itemList({ type: 'reset' });
+        Actions.pop();
       });
   };
 };
@@ -61,7 +61,7 @@ export const itemDelete = ({ uid }) => {
       .remove()
       .then(() => {
         dispatch({ type: ITEM_DELETE });
-        Actions.itemList({ type: 'reset' });
+        Actions.pop();
       });
   };
 };
@@ -69,6 +69,6 @@ export const itemDelete = ({ uid }) => {
 export const backPage = () => {
   return(dispatch) => {
     dispatch({ type: BACK_PAGE });
-    Actions.itemList({ type: 'reset' });
+    Actions.pop();
   };
 };

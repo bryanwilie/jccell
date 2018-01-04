@@ -4,7 +4,7 @@ import { Text, Switch, TouchableOpacity, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { setDefaultSuccess, defaultAccountFetch, setSignUp, ownerPhoneUpdate, defaultOwnerPhoneUpdate } from '../actions';
-import { Card, CardSection, Input } from './common';
+import { Card, CardSection, StandardInput } from './common';
 import Announcement from './common/Announcement';
 
 class UserPage extends Component {
@@ -80,7 +80,7 @@ class UserPage extends Component {
         </CardSection>
 
         <CardSection style={containerStyle}>
-          <Input
+          <StandardInput
             label="Seller Phone"
             placeholder="0811 222 333 44"
             value={this.props.defaultPhone}

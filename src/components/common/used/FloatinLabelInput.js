@@ -31,7 +31,7 @@ class FloatingLabelInput extends Component {
         </Text>
         <TextInput
           {...props}
-          style={{ height: 26, fontSize: 20, color: '#000', borderBottomWidth: 1, borderBottomColor: '#555' }}
+          style={}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           blurOnSubmit

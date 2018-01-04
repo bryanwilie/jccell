@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { itemUpdate, backPage } from '../actions';
-import { CardSection, Input } from './common';
+import { CardSection, StandardInput } from './common';
 
 class ItemForm extends Component {
   componentDidMount() {
@@ -29,7 +29,7 @@ class ItemForm extends Component {
     return (
       <View>
         <CardSection>
-          <Input
+          <StandardInput
             label="Nama Operator"
             placeholder="Operator"
             value={this.props.name}
@@ -49,7 +49,7 @@ class ItemForm extends Component {
         </CardSection>
 
         <CardSection>
-          <Input
+          <StandardInput
             label="Besarnya"
             placeholder="5k, 100k, 2000k, 10 GB"
             value={this.props.size}
@@ -58,7 +58,7 @@ class ItemForm extends Component {
         </CardSection>
 
         <CardSection>
-          <Input
+          <StandardInput
             label="Harga"
             placeholder="4.5k, 25.5k, 50k"
             value={this.props.price}
@@ -67,7 +67,7 @@ class ItemForm extends Component {
         </CardSection>
 
         <CardSection>
-          <Input
+          <StandardInput
             label="Kode Produk"
             placeholder="S25, GOPAY150"
             value={this.props.code}

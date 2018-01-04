@@ -3,7 +3,7 @@ import { Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { defaultAccountFetch, emailChanged, passwordChanged, loginUser } from '../actions';
-import { Button, Card, CardSection, Input, Spinner } from './common';
+import { Button, Card, CardSection, StandardInput, Spinner } from './common';
 import Splash from './common/Splash';
 
 class LoginForm extends Component {
@@ -72,10 +72,14 @@ class LoginForm extends Component {
 
   render() {
     const {email, password, error} = this.props;
-    const {buttonStyle, imageStyle, errorTextStyle} = styles;
+    const {buttonStyle, containerStyle, imageStyle, errorTextStyle} = styles;
 
     return (
       <Card>
+        <Splash
+          visible = {this.state.showSplash}
+        />
+
         <CardSection>
           <TouchableOpacity onPress={this.onImagePress.bind(this)} style= {buttonStyle}>
             <Image
@@ -86,8 +90,8 @@ class LoginForm extends Component {
           </TouchableOpacity>
         </CardSection>
 
-        <CardSection>
-          <Input
+        <CardSection style={containerStyle}>
+          <StandardInput
             label="Email"
             placeholder="email@gmail.com"
             onChangeText={this.onEmailChange.bind(this)}
@@ -95,9 +99,9 @@ class LoginForm extends Component {
           />
         </CardSection>
 
-        <CardSection>
-          <Input
-            secureTextEntry
+        <CardSection style={containerStyle}>
+          <StandardInput
+            secureTextEntry={true}
             label="Password"
             placeholder="password"
             onChangeText={this.onPasswordChange.bind(this)}
@@ -112,10 +116,6 @@ class LoginForm extends Component {
         <CardSection>
           {this.renderLoginButton()}
         </CardSection>
-
-        <Splash
-          visible = {this.state.showSplash}
-        />
       </Card>
     );
   }
@@ -135,6 +135,12 @@ const styles = {
     borderRadius: 75,
     alignSelf: 'center',
     resizeMode: 'contain'
+  },
+  containerStyle: {
+    // height: 60,
+    // flexDirection: 'row',
+    // alignSelf: 'center',
+    // alignItems: 'flex-start'
   },
   buttonStyle: {
     flex: 1,

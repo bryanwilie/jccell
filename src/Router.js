@@ -80,6 +80,7 @@ class RouterComponent extends Component {
 
           <Scene
             key="itemList"
+            onBack={() => Actions.pop()}
             onRight={() => Actions.itemCreate()}
             rightTitle="Add New"
             component={ItemList}
@@ -89,14 +90,16 @@ class RouterComponent extends Component {
           <Scene
             key="itemCreate"
             component={ItemCreate}
+            onBack={() => {
+              Actions.pop()
+            }}
             title="Create New Item"
           />
 
           <Scene
             key='itemEdit'
             onBack={() => {
-              Actions.itemList()
-              this.onBackPageFunction()
+              Actions.pop()
             }}
             component={ItemEdit}
             title="Edit Item"

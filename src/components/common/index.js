@@ -7,3 +7,4 @@ export * from './Spinner';
 export * from './Confirm';
 export * from './Announcement';
 export * from './Splash';
+export * from './StandardInput';

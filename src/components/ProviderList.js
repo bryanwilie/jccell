@@ -63,9 +63,10 @@ class ProviderList extends Component{
     return (
       <View style={{ alignItems: 'center' }}>
         <CardSection>
-            <Text style={styles.textStyle}>Nama Provider</Text>
+            <Text style={styles.textStyle}>Pilih Provider</Text>
         </CardSection>
         <ListView
+          contentContainerStyle={styles.containerStyle}
           enableEmptySections
           dataSource={this.dataSource}
           renderRow={this.renderRow}
@@ -79,6 +80,11 @@ const styles = {
   textStyle: {
     fontSize: 24,
     fontWeight: 'bold'
+  },
+  containerStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingBottom: 50
   }
 };
 

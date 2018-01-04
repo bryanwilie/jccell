@@ -3,7 +3,7 @@ import { View, Text, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { customerFormUpdate, hardwareBackCustomer, sendSms } from '../actions';
-import { CardSection, Input, Button, Confirm} from './common';
+import { CardSection, StandardInput, Button, Confirm} from './common';
 import Announcement from './common/Announcement';
 
 class CustomerForm extends Component {
@@ -72,7 +72,7 @@ class CustomerForm extends Component {
         </Text>
 
         <CardSection>
-          <Input
+          <StandardInput
             label="Nomor HP"
             placeholder="0811 222 333 44"
             value={phone}
@@ -81,7 +81,7 @@ class CustomerForm extends Component {
         </CardSection>
 
         <CardSection>
-          <Input
+          <StandardInput
             secureTextEntry
             label="PIN"
             placeholder="123456"

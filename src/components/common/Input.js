@@ -1,46 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { TextInput, View, Text } from 'react-native';
 
-const Input = ({ label, value, onChangeText , placeholder, secureTextEntry, onBlur, onEndEditing}) => {
-  const { inputStyle, labelStyle, containerStyle } = styles;
+class Input extends Component {
+  state = { isFocused: false };
 
-  return (
-    <View style={containerStyle}>
-      <Text style={labelStyle}>{label}</Text>
-      <TextInput
-        secureTextEntry={secureTextEntry}
-        placeholder={placeholder}
-        autoCorrect={false}
-        style={inputStyle}
-        value={value}
-        onChangeText={onChangeText}
-        onBlur={onBlur}
-        onEndEditing={onEndEditing}
-      />
-    </View>
-  );
-};
+  handleFocus = () => this.setState({ isFocused: true });
+  handleBlur = () => {
+    if ((this.props.value.length) == 0) {
+      this.setState({ isFocused: false });
+    }
+  }
+
+  render() {
+    const { label, ...props } = this.props;
+    const { isFocused } = this.state;
+    const { viewStyle, textInputStyle } = styles;
+    const labelStyle = {
+      // position: 'absolute',
+      // left: 0,
+      // alignSelf: 'center',
+      top: !isFocused ? 18 : 0,
+      fontSize: !isFocused ? 20 : 14,
+      color: !isFocused ? '#aaa' : '#000',
+    };
+
+    return(
+      <View style={viewStyle}>
+        <Text style={labelStyle}>
+          {this.props.label}
+        </Text>
+        <TextInput
+          {...props}
+          style = {textInputStyle}
+          onFocus = {this.handleFocus}
+          onBlur = {this.handleBlur}
+          blurOnSubmit
+          secureTextEntry={this.props.secureTextEntry}
+          onEndEditing={this.props.onEndEditing}
+          onChangeText={this.props.onChangeText}
+          autoCorrect={false}
+          value={this.props.value}
+        />
+      </View>
+    );
+  }
+}
 
 const styles = {
-  inputStyle: {
+  viewStyle: {
+    // paddingTop: 18,
+  },
+  textInputStyle: {
+    // flex: 2,
+    // height: 26,
+    fontSize: 18,
     color: '#000',
-    paddingRight: 5,
-    paddingLeft: 5,
-    fontSize: 18,
-    lineHeight: 23,
-    flex: 2
-  },
-  labelStyle: {
-    fontSize: 18,
-    paddingLeft: 15,
-    flex: 1
-  },
-  containerStyle: {
-    height: 40,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#555'
   }
 };
 
-export { Input };
+export default Input;

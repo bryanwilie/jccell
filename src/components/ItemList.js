@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, ListView } from 'react-native';
+import { View, Text, ListView, BackHandler } from 'react-native';
 import { itemsFetch } from '../actions';
 import ListItem from './ListItem';
 import { CardSection } from './common';
@@ -14,6 +14,18 @@ class ItemList extends Component{
 
   componentWillReceiveProps(nextProps) {
     this.createDataSource(nextProps);
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  handleBackButton = () => {
+    return true;
   }
 
   compareName(a, b) {
