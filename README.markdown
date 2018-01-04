@@ -1,26 +1,14 @@
-# Watchman
+JCCell
 
-A file watching service.
+built on React Native 0.50.0-rc.2
+with dependencies as follows:
 
-## Purpose
-
-Watchman exists to watch files and record when they actually change.  It can
-also trigger actions (such as rebuilding assets) when matching files change.
-
-## Documentation
-
-Head on over to https://facebook.github.io/watchman/
-
-## Build Status
-
-[![Build Status](https://travis-ci.org/facebook/watchman.svg?branch=master)
-](https://travis-ci.org/facebook/watchman)
-
-[![Build status](https://ci.appveyor.com/api/projects/status/uvafoyc550kg438h/branch/master?svg=true)
-](https://ci.appveyor.com/project/wez/watchman/branch/master)
-
-## License
-
-Watchman is made available under the terms of the Apache License 2.0.  See the
-LICENSE file that accompanies this distribution for the full text of the
-license.
+"firebase": "^4.3.0",
+"lodash": "^4.17.4",
+"react": "16.0.0-alpha.12",
+"react-native-router-flux": "^3.41.0",
+"react-native-sms-android": "^0.4.1",
+"react-number-format": "^3.1.0",
+"react-redux": "^5.0.6",
+"redux": "^3.7.2",
+"redux-thunk": "^2.2.0"

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { defaultAccountFetch, emailChanged, passwordChanged, loginUser } from '../actions';
 import { Button, Card, CardSection, Input, Spinner } from './common';
+import Splash from './common/Splash';
 
 class LoginForm extends Component {
   componentWillMount() {
@@ -11,7 +12,10 @@ class LoginForm extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({showSplash: false});
   }
+
+  state = {showSplash: true};
 
   onEmailChange(text) {
     this.props.emailChanged(text);
@@ -68,14 +72,15 @@ class LoginForm extends Component {
 
   render() {
     const {email, password, error} = this.props;
+    const {buttonStyle, imageStyle, errorTextStyle} = styles;
 
     return (
       <Card>
         <CardSection>
-          <TouchableOpacity onPress={this.onImagePress.bind(this)} style= {styles.buttonStyle}>
+          <TouchableOpacity onPress={this.onImagePress.bind(this)} style= {buttonStyle}>
             <Image
               source={require('../images/JCCell_cover.png')}
-              style={styles.imageStyle}
+              style={imageStyle}
             >
             </Image>
           </TouchableOpacity>
@@ -100,13 +105,17 @@ class LoginForm extends Component {
           />
         </CardSection>
 
-        <Text style={styles.errorTextStyle}>
+        <Text style={errorTextStyle}>
          {error}
         </Text>
 
         <CardSection>
           {this.renderLoginButton()}
         </CardSection>
+
+        <Splash
+          visible = {this.state.showSplash}
+        />
       </Card>
     );
   }
