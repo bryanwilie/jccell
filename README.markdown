@@ -2,7 +2,7 @@
 
 Simple one-app sign in, fill in, view as catalog and select to buy for simple buy selling activity.
 
-# Build notes
+## Build notes
 
 built on React Native 0.50.0-rc.2
 with dependencies as follows:
