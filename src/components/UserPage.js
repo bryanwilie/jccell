@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Text, Switch, TouchableOpacity, BackHandler } from 'react-native';
+import { Text, Switch, TouchableOpacity, BackHandler, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { setDefaultSuccess, defaultAccountFetch, setSignUp, ownerPhoneUpdate, defaultOwnerPhoneUpdate } from '../actions';
@@ -25,6 +25,7 @@ class UserPage extends Component {
   }
 
   componentDidMount() {
+    Keyboard.dismiss();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 

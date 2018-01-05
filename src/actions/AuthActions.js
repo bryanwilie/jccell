@@ -45,7 +45,7 @@ export const loginUser = ({ email, password, useAsCatalogue, allowSignUp, skip }
             });
         dispatch({type: SKIP_USER });
       } else {
-        console.log('Email and Password stored as default but user dont want it to be the Catalogue for customer');
+        console.log('useAsCatalogue false');
         loginUserFail(dispatch, "Catalogue Not Available");
       }
 

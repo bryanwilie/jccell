@@ -6,7 +6,6 @@ import {
   CUSTOMER_FORM_UPDATE,
   SEND_SMS_SUCCESS,
   BACK_CUSTOMER,
-  HARDWARE_BACK_CUSTOMER,
   DEFAULT_FETCH_SUCCESS,
   SET_DEFAULT_SUCCESS,
   DEFAULT_PHONE_UPDATE
@@ -17,7 +16,8 @@ export const defaultAccountFetch = () => {
     firebase.database().ref(`/defaultAccount`)
       .on('value', snapshot => {
         dispatch({ type: DEFAULT_FETCH_SUCCESS, payload: snapshot.val()});
-      });
+      }
+        , error => {console.log(error);});
   };
 };
 

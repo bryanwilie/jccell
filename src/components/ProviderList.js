@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, ListView, BackHandler } from 'react-native';
+import { View, Text, ListView, BackHandler, Keyboard } from 'react-native';
 import { itemsFetch } from '../actions';
 import ListProvider from './ListProvider';
 import { CardSection } from './common';
 
 class ProviderList extends Component{
   componentDidMount() {
+    Keyboard.dismiss();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
@@ -60,13 +61,15 @@ class ProviderList extends Component{
   }
 
   render() {
+    const {viewStyle, textStyle, containerStyle} = styles;
+
     return (
-      <View style={{ alignItems: 'center' }}>
+      <View style={viewStyle}>
         <CardSection>
-            <Text style={styles.textStyle}>Pilih Provider</Text>
+            <Text style={textStyle}>Pilih Provider</Text>
         </CardSection>
         <ListView
-          contentContainerStyle={styles.containerStyle}
+          contentContainerStyle={containerStyle}
           enableEmptySections
           dataSource={this.dataSource}
           renderRow={this.renderRow}
@@ -77,6 +80,11 @@ class ProviderList extends Component{
 }
 
 const styles = {
+  viewStyle: {
+    alignSelf: 'center',
+    alignContent: 'center',
+    alignItems: 'center'
+  },
   textStyle: {
     fontSize: 24,
     fontWeight: 'bold'

@@ -76,10 +76,6 @@ class LoginForm extends Component {
 
     return (
       <Card>
-        <Splash
-          visible = {this.state.showSplash}
-        />
-
         <CardSection>
           <TouchableOpacity onPress={this.onImagePress.bind(this)} style= {buttonStyle}>
             <Image
@@ -90,7 +86,7 @@ class LoginForm extends Component {
           </TouchableOpacity>
         </CardSection>
 
-        <CardSection style={containerStyle}>
+        <CardSection>
           <StandardInput
             label="Email"
             placeholder="email@gmail.com"
@@ -99,7 +95,7 @@ class LoginForm extends Component {
           />
         </CardSection>
 
-        <CardSection style={containerStyle}>
+        <CardSection>
           <StandardInput
             secureTextEntry={true}
             label="Password"
@@ -116,10 +112,16 @@ class LoginForm extends Component {
         <CardSection>
           {this.renderLoginButton()}
         </CardSection>
+
+        <Splash
+          visible = {this.state.showSplash}
+        />
+
       </Card>
     );
   }
 }
+
 
 const styles = {
   errorTextStyle: {
@@ -135,12 +137,6 @@ const styles = {
     borderRadius: 75,
     alignSelf: 'center',
     resizeMode: 'contain'
-  },
-  containerStyle: {
-    // height: 60,
-    // flexDirection: 'row',
-    // alignSelf: 'center',
-    // alignItems: 'flex-start'
   },
   buttonStyle: {
     flex: 1,

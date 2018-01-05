@@ -48,7 +48,7 @@ class RouterComponent extends Component {
             key="packageList"
             onBack={() => {
               this.onBackCustomerFunction()
-              Actions.providerList({ type: 'reset' })
+              Actions.pop()
             }}
             component={PackageList}
             title="List Paket"
@@ -58,7 +58,7 @@ class RouterComponent extends Component {
             key="customerForm"
             onBack={() => {
               this.onBackCustomerFunction()
-              Actions.packageList()
+              Actions.pop()
             }}
             component={CustomerForm}
             title="Form Detail"

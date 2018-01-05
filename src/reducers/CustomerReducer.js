@@ -24,7 +24,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CUSTOMER_FORM_UPDATE:
-      return { ...state, [action.payload.prop]: action.payload.value };
+      return { ...state, [action.payload.prop]: action.payload.value};
     case SEND_SMS_SUCCESS:
       return INITIAL_STATE;
     case BACK_CUSTOMER:
@@ -45,7 +45,7 @@ export default (state = INITIAL_STATE, action) => {
         defaultPhone: action.payload.defaultPhone
       };
     case DEFAULT_PHONE_UPDATE:
-      return { ...state, [action.payload.prop]: action.payload.value };
+      return { ...state, [action.payload.prop]: action.payload.value};
     default:
       return state;
   }

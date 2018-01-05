@@ -19,8 +19,13 @@ export const itemUpdate = ({ prop, value }) => {
 export const itemCreate = ({ name, detail, size, price, code }) => {
   const { currentUser } = firebase.auth();
 
+  var name = name.toLowerCase();
+  var size = size.toUpperCase();
+  var price = price.toUpperCase();
+  var code = code.toUpperCase();
+
   return (dispatch) => {
-    firebase.database().ref(`/users/${currentUser.uid}/items`)
+    const db = firebase.database().ref(`/users/${currentUser.uid}/items`)
       .push({ name, detail, size, price, code })
       .then(() => {
         dispatch({ type: ITEM_CREATE });
@@ -28,6 +33,8 @@ export const itemCreate = ({ name, detail, size, price, code }) => {
       });
   };
 };
+
+// .hasChild
 
 export const itemsFetch = () => {
   const { currentUser } = firebase.auth();
@@ -42,6 +49,11 @@ export const itemsFetch = () => {
 
 export const itemSave = ({ name, detail, size, price, code, uid }) => {
   const { currentUser } = firebase.auth();
+
+  var name = name.toLowerCase();
+  var size = size.toUpperCase();
+  var price = price.toUpperCase();
+  var code = code.toUpperCase();
 
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/items/${uid}`)
