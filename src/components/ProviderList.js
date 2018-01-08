@@ -65,7 +65,7 @@ class ProviderList extends Component{
 
     return (
       <View style={viewStyle}>
-        <CardSection>
+        <CardSection style={viewStyle}>
             <Text style={textStyle}>Pilih Provider</Text>
         </CardSection>
         <ListView
