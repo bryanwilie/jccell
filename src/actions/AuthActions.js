@@ -7,7 +7,8 @@ import {
   LOGIN_USER_FAIL,
   LOGIN_USER,
   SKIP_USER,
-  LOGGED_IN
+  LOGGED_IN,
+  ELIMINATE_ERRORS
 } from './types';
 
 export const emailChanged = (text) => {
@@ -96,6 +97,12 @@ export const loginUser = ({ email, password, useAsCatalogue, allowSignUp, skip }
 
 const loginUserFail = (dispatch, message) => {
   dispatch({ type: LOGIN_USER_FAIL, payload: message});
+};
+
+export const eliminateErrors = (dispatch) => {
+  return(dispatch) => {
+    dispatch({ type: ELIMINATE_ERRORS});
+  };
 };
 
 const loginUserSuccess = (dispatch, user, skip) => {

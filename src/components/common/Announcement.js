@@ -11,7 +11,7 @@ class Announcement extends Component {
       <Modal
         visible={this.props.visible}
         transparent
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => {this.props.onRequestClose()}}
       >
         <TouchableWithoutFeedback

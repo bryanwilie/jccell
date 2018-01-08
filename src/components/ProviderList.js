@@ -51,7 +51,7 @@ class ProviderList extends Component{
 
     items.sort(this.compareName);
 
-    const filteredItems = _.uniq(_.map(items, "name"));
+    const filteredItems = _.sortedUniq(_.map(items, "name"));
 
     this.dataSource = ds.cloneWithRows(filteredItems);
   }
@@ -82,7 +82,6 @@ class ProviderList extends Component{
 const styles = {
   viewStyle: {
     alignSelf: 'center',
-    alignContent: 'center',
     alignItems: 'center'
   },
   textStyle: {

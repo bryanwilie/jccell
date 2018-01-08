@@ -19,13 +19,13 @@ export const itemUpdate = ({ prop, value }) => {
 export const itemCreate = ({ name, detail, size, price, code }) => {
   const { currentUser } = firebase.auth();
 
-  var name = name.toLowerCase();
-  var size = size.toUpperCase();
-  var price = price.toUpperCase();
-  var code = code.toUpperCase();
+  var name = name.replace(/\s/g,'').toLowerCase();
+  var size = size.replace(/\s/g,'').toUpperCase();
+  var price = price.replace(/\s/g,'').toUpperCase();
+  var code = code.replace(/\s/g,'').toUpperCase();
 
   return (dispatch) => {
-    const db = firebase.database().ref(`/users/${currentUser.uid}/items`)
+    firebase.database().ref(`/users/${currentUser.uid}/items`)
       .push({ name, detail, size, price, code })
       .then(() => {
         dispatch({ type: ITEM_CREATE });
@@ -33,8 +33,6 @@ export const itemCreate = ({ name, detail, size, price, code }) => {
       });
   };
 };
-
-// .hasChild
 
 export const itemsFetch = () => {
   const { currentUser } = firebase.auth();
@@ -81,6 +79,6 @@ export const itemDelete = ({ uid }) => {
 export const backPage = () => {
   return(dispatch) => {
     dispatch({ type: BACK_PAGE });
-    Actions.pop();
+    Actions.pop({ type: 'reset' });
   };
 };

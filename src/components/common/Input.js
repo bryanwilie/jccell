@@ -16,18 +16,19 @@ class Input extends Component {
     const { isFocused } = this.state;
     const { viewStyle, textInputStyle } = styles;
     const labelStyle = {
-      // position: 'absolute',
-      // left: 0,
-      // alignSelf: 'center',
-      top: !isFocused ? 18 : 0,
-      fontSize: !isFocused ? 20 : 14,
+      height: 20,
+      left: 0,
+      paddingLeft: 5,
+      top: !isFocused ? 22 : 10,
+      fontSize: !isFocused ? 18 : 12,
       color: !isFocused ? '#aaa' : '#000',
     };
+    const { secureTextEntry, onEndEditing, onChangeText, value, style } = this.props;
 
     return(
-      <View style={viewStyle}>
+      <View style={style}>
         <Text style={labelStyle}>
-          {this.props.label}
+          {label}
         </Text>
         <TextInput
           {...props}
@@ -35,11 +36,11 @@ class Input extends Component {
           onFocus = {this.handleFocus}
           onBlur = {this.handleBlur}
           blurOnSubmit
-          secureTextEntry={this.props.secureTextEntry}
-          onEndEditing={this.props.onEndEditing}
-          onChangeText={this.props.onChangeText}
+          secureTextEntry={secureTextEntry}
+          onEndEditing={onEndEditing}
+          onChangeText={onChangeText}
           autoCorrect={false}
-          value={this.props.value}
+          value={value}
         />
       </View>
     );
@@ -47,16 +48,10 @@ class Input extends Component {
 }
 
 const styles = {
-  viewStyle: {
-    // paddingTop: 18,
-  },
   textInputStyle: {
-    // flex: 2,
-    // height: 26,
+    height: 40,
     fontSize: 18,
-    color: '#000',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#555'
+    color: '#000'
   }
 };
 

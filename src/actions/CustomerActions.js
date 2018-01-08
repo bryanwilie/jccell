@@ -6,6 +6,7 @@ import {
   CUSTOMER_FORM_UPDATE,
   SEND_SMS_SUCCESS,
   BACK_CUSTOMER,
+  HARDWARE_BACK_CUSTOMER,
   DEFAULT_FETCH_SUCCESS,
   SET_DEFAULT_SUCCESS,
   DEFAULT_PHONE_UPDATE
@@ -98,6 +99,6 @@ export const backCustomer = () => {
 export const hardwareBackCustomer = () => {
   return(dispatch) => {
     dispatch({ type: HARDWARE_BACK_CUSTOMER });
-    Actions.providerList({ type: 'reset' });
+    Actions.pop();
   };
 };

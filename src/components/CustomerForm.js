@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, BackHandler } from 'react-native';
+import { View, Text, BackHandler, Keyboard, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { customerFormUpdate, hardwareBackCustomer, sendSms } from '../actions';
 import { CardSection, StandardInput, Button, Confirm} from './common';
 import Announcement from './common/Announcement';
+import Input from './common/Input';
 
 class CustomerForm extends Component {
   state = { showConfirm: false, showSucceed: false, showEmpty: false, showPhone: false, showPinNotEnough: false};
 
   componentDidMount() {
+    Keyboard.dismiss();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
@@ -61,36 +63,34 @@ class CustomerForm extends Component {
 
   render() {
     const { name, detail, size, price, code } = this.props.item;
-    const { phone, pin } = this.props;
+    const { phone, pin, customerFormUpdate } = this.props;
+    const { showSucceed, showEmpty, showConfirm, showPhone, showPinNotEnough } = this.state;
+    const { containerInputStyle, textStyle, textInputStyle } = styles;
 
     (name).toUpperCase()
 
     return (
       <View>
-        <Text style={styles.textStyle}>
+        <Text style={textStyle}>
           Silahkan isi nomor HP dan PIN anda
         </Text>
 
-        <CardSection>
-          <StandardInput
-            label="Nomor HP"
-            placeholder="0811 222 333 44"
-            value={phone}
-            onChangeText={value => this.props.customerFormUpdate({ prop: 'phone', value })}
-          />
-        </CardSection>
+        <Input
+          style={textInputStyle}
+          label="Nomor HP"
+          value={phone}
+          onChangeText={value => customerFormUpdate({ prop: 'phone', value })}
+        />
 
-        <CardSection>
-          <StandardInput
-            secureTextEntry
-            label="PIN"
-            placeholder="123456"
-            value={pin}
-            onChangeText={value => this.props.customerFormUpdate({ prop: 'pin', value })}
-          />
-        </CardSection>
+        <Input
+          style={textInputStyle}
+          secureTextEntry
+          label="PIN"
+          value={pin}
+          onChangeText={value => customerFormUpdate({ prop: 'pin', value })}
+        />
 
-        <Text style={styles.textStyle}>
+        <Text style={textStyle}>
           Total pembelanjaan anda adalah Rp {price}
         </Text>
 
@@ -101,25 +101,25 @@ class CustomerForm extends Component {
         </CardSection>
 
         <Announcement
-          visible = {this.state.showEmpty}
+          visible = {showEmpty}
           children = "Semua bagian harus diisi"
           onRequestClose = {this.onRequestClose.bind(this)}
         />
 
         <Announcement
-          visible = {this.state.showPhone}
+          visible = {showPhone}
           children = "Nomor hp tidak valid"
           onRequestClose = {this.onRequestClose.bind(this)}
         />
 
         <Announcement
-          visible = {this.state.showPinNotEnough}
+          visible = {showPinNotEnough}
           children = "PIN harus 6 digit"
           onRequestClose = {this.onRequestClose.bind(this)}
         />
 
         <Confirm
-          visible={this.state.showConfirm}
+          visible={showConfirm}
           onAccept={this.onAccept.bind(this)}
           onDecline={this.onDecline.bind(this)}
         >
@@ -127,7 +127,7 @@ class CustomerForm extends Component {
         </Confirm>
 
         <Announcement
-          visible= {this.state.showSucceed}
+          visible= {showSucceed}
           children= "Transaksi berhasil!"
           onRequestClose= {this.onRequestClose.bind(this)}
         />
@@ -137,11 +137,20 @@ class CustomerForm extends Component {
 }
 
 const styles = {
+  containerInputStyle: {
+    height: 70,
+  },
+  textInputStyle: {
+    paddingLeft: 15,
+    paddingRight: 20,
+    width: Dimensions.get('window').width,
+    height: 50
+  },
   textStyle: {
     fontSize: 18,
     paddingLeft: 15,
-    paddingTop: 10,
-    paddingBottom: 10
+    paddingTop: 25,
+    paddingBottom: 15
   }
 }
 

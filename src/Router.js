@@ -91,7 +91,7 @@ class RouterComponent extends Component {
             key="itemCreate"
             component={ItemCreate}
             onBack={() => {
-              Actions.pop()
+              this.props.backPage()
             }}
             title="Create New Item"
           />
@@ -99,7 +99,7 @@ class RouterComponent extends Component {
           <Scene
             key='itemEdit'
             onBack={() => {
-              Actions.pop()
+              this.props.backPage()
             }}
             component={ItemEdit}
             title="Edit Item"

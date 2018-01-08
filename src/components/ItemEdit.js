@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import { Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
 import ItemForm from './ItemForm';
@@ -13,6 +14,10 @@ class ItemEdit extends Component {
     _.each(this.props.item, (value, prop) => {
       this.props.itemUpdate({ prop, value })
     });
+  }
+
+  componentDidMount() {
+    Keyboard.dismiss();
   }
 
   onButtonPress() {

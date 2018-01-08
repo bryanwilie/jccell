@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import { Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { itemUpdate, itemCreate } from '../actions';
 import { Card, CardSection, Button } from './common';
 import ItemForm from './ItemForm';
 
 class ItemCreate extends Component {
+  componentDidMount() {
+    Keyboard.dismiss();
+  }
+
   onButtonPress() {
     const { name, detail, size, price, code } = this.props;
 

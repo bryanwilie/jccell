@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import firebase from 'firebase';
+import { StyleSheet, Text } from 'react-native';
 import ReduxThunk from 'redux-thunk'; //middleware
 import reducers from  './reducers';
 import Router from './Router';
@@ -21,6 +22,15 @@ class App extends Component {
   }
 
   render() {
+    const oldRender = Text.prototype.render;
+
+    Text.prototype.render = function (...args) {
+      const origin = oldRender.call(this, ...args);
+      return React.cloneElement(origin, {
+        style: [origin.props.style, styles.defaultFontFamily]
+      });
+    };
+    
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
       <Provider store={store}>
@@ -29,5 +39,11 @@ class App extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  defaultFontFamily: {
+    fontFamily: 'lucida grande',
+  }
+});
 
 export default App;

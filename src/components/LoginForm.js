@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, Image, TouchableOpacity, Dimensions, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { defaultAccountFetch, emailChanged, passwordChanged, loginUser } from '../actions';
+import { defaultAccountFetch, emailChanged, passwordChanged, loginUser, eliminateErrors } from '../actions';
 import { Button, Card, CardSection, StandardInput, Spinner } from './common';
 import Splash from './common/Splash';
 
@@ -13,6 +13,10 @@ class LoginForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({showSplash: false});
+  }
+
+  componentDidMount() {
+    Keyboard.dismiss();
   }
 
   state = {showSplash: true};
@@ -71,7 +75,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    const {email, password, error} = this.props;
+    const {email, password, error, eliminateErrors} = this.props;
     const {buttonStyle, containerStyle, imageStyle, errorTextStyle} = styles;
 
     return (
@@ -92,6 +96,7 @@ class LoginForm extends Component {
             placeholder="email@gmail.com"
             onChangeText={this.onEmailChange.bind(this)}
             value={email}
+            onFocus={eliminateErrors}
           />
         </CardSection>
 
@@ -102,6 +107,7 @@ class LoginForm extends Component {
             placeholder="password"
             onChangeText={this.onPasswordChange.bind(this)}
             value={password}
+            onFocus={eliminateErrors}
           />
         </CardSection>
 
@@ -154,5 +160,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  emailChanged, passwordChanged, loginUser, defaultAccountFetch
+  emailChanged, passwordChanged, loginUser, defaultAccountFetch, eliminateErrors
 })(LoginForm);

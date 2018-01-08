@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Picker, BackHandler } from 'react-native';
+import { View, Text, Picker, BackHandler, Keyboard } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -8,6 +8,7 @@ import { CardSection, StandardInput } from './common';
 
 class ItemForm extends Component {
   componentDidMount() {
+    Keyboard.dismiss();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 

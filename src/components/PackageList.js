@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, ListView, BackHandler } from 'react-native';
+import { View, Text, ListView, BackHandler, Keyboard } from 'react-native';
 import { itemsFetch, hardwareBackCustomer } from '../actions';
 import ListPackage from './ListPackage';
 import { CardSection } from './common';
 
 class PackageList extends Component{
   componentDidMount() {
+    Keyboard.dismiss();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
@@ -29,16 +30,32 @@ class PackageList extends Component{
     this.createDataSource(nextProps);
   }
 
-  compareName(a, b) {
+  compareDetail(a, b) {
     // careful, not reusable, make a keyField update
-    const childA = a.name.toUpperCase();
-    const childB = b.name.toUpperCase();
+    const ketA = a.detail.toUpperCase();
+    const ketB = b.detail.toUpperCase();
+    const besarA = a.size.toUpperCase();
+    const besarB = b.size.toUpperCase();
+    const hargaA = a.price.toUpperCase();
+    const hargaB = b.price.toUpperCase();
 
     let comparison = 0;
-    if (childA > childB) {
+    if (ketA > ketB) {
       comparison = 1;
-    } else if (childA < childB) {
+    } else if (ketA < ketB) {
       comparison = -1;
+    } else if (ketA == ketB) {
+      if (besarA > besarB) {
+        comparison = -1;
+      } else if (besarA < besarB) {
+        comparison = 1;
+      } else if (besarA == besarB) {
+        if (hargaA > hargaB) {
+          comparison = 1;
+        } else if (hargaA < hargaB) {
+          comparison = -1;
+        }
+      }
     }
 
     return comparison;
@@ -49,9 +66,14 @@ class PackageList extends Component{
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
-    items.sort(this.compareName);
+    items.sort(this.compareDetail);
 
-    const filteredItems = _.filter(items, {name: this.props.selectedProvider})
+    var filteredItems = _.filter(items, {name: this.props.selectedProvider});
+
+    filteredItems = filteredItems.filter((filteredItems, index, self) => index === self.findIndex((t) => (
+    t.detail === filteredItems.detail && t.size === filteredItems.size && t.price === filteredItems.price && t.code === filteredItems.code
+      ))
+    )
 
     this.dataSource = ds.cloneWithRows(filteredItems);
   }

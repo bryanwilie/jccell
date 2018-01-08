@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Modal, Image } from 'react-native';
+import { Text, View, Modal, Image, Dimensions } from 'react-native';
 import { CardSection } from './CardSection';
 
 class Splash extends Component {
@@ -44,7 +44,10 @@ const styles = {
     justifyContent: 'center'
   },
   imageStyle: {
-
+    height: Dimensions.get('screen').height,
+    width: Dimensions.get('screen').width,
+    alignSelf: 'center',
+    resizeMode: 'contain'
   }
 };
 
